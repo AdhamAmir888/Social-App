@@ -11,15 +11,7 @@ import axios from "axios";
 const Register = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-  type Inputs = {
-    name: string;
-    username: string;
-    email: string;
-    gender: string;
-    dateOfBirth: string;
-    password: string;
-    rePassword: string;
-  };
+
   const schema = z
     .object({
       name: z
@@ -63,24 +55,25 @@ const Register = () => {
       },
       { message: "Passwords do not match", path: ["rePassword"] },
     );
-  const {
-    register,
-    handleSubmit,
-    formState: { touchedFields, errors },
-  } = useForm<Inputs>({
-    defaultValues: {
-      name: "",
-      username: "",
-      email: "",
-      dateOfBirth: "",
-      gender: "",
-      password: "",
-      rePassword: "",
-    },
-    resolver: zodResolver(schema),
-  });
+    type FormInput = z.input<typeof schema>;
+type FormOutput = z.output<typeof schema>;
+const {
+  register,
+  handleSubmit,
+  formState: { touchedFields, errors },
+} = useForm<FormInput, unknown, FormOutput>({
+  defaultValues: {
+    name: "",
+    username: "",
+    email: "",
+    dateOfBirth: "",
+    password: "",
+    rePassword: "",
+  },
+  resolver: zodResolver(schema),
+});
 
-  async function signUp(values: Inputs) {
+  async function signUp(values: FormOutput) {
     try {
       setLoading(true);
       const { data } = await axios.post(
