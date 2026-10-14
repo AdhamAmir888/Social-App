@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { useContext } from "react";
+import { useContext } from "react";
 import { useState } from "react";
 
 import { Link, useNavigate } from "react-router-dom";
@@ -7,7 +7,7 @@ import { useForm } from "react-hook-form";
 import * as z from "zod";
 // import { coerce } from "./../../../node_modules/zod/v3/types";
 import { zodResolver } from "@hookform/resolvers/zod";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import axios from "axios";
 import { authContext } from './../../Context/AuthContext';
 const Login = () => {
